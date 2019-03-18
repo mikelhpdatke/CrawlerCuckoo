@@ -1,0 +1,917 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>Cuckoo Sandbox</title>
+        <link rel="shortcut icon" type="image/png" href=" /static/favicon-64x64.png" sizes="64x64" />
+        <link rel="shortcut icon" type="image/png" href=" /static/favicon-32x32.png" sizes="32x32" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Cuckoo Sandbox" />
+        <meta name="author" content="Cuckoo Sandbox" />
+
+        <link href="/static/css/vendor.css" rel="stylesheet" type="text/css" />
+        <link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+
+        
+            <script>
+                var task_id = '17784';
+            </script>
+        
+
+        <script src="/static/js/vendor.js"></script>
+        <script src="/static/js/handlebars-templates.js"></script>
+        <script src="/static/js/hexdump.js"></script>
+        <script src="/static/js/cuckoo/loader.js"></script>
+        <script src="/static/js/cuckoo/sticky.js"></script>
+        <script src="/static/js/cuckoo/analysis_sidebar.js"></script>
+        <script src="/static/js/cuckoo/submission.js"></script>
+        <script src="/static/js/cuckoo/process_tree.js"></script>
+        <script src="/static/js/cuckoo/recent.js"></script>
+        <script src="/static/js/cuckoo/analysis_network.js"></script>
+        <script src="/static/js/cuckoo/app.js"></script>
+
+    </head>
+
+    <body
+
+        
+
+        id="analysis"
+
+    >
+
+    
+
+<nav class="app-nav" id="primary-nav">
+
+	<a href="/" class="logo">
+		<img src="/static/graphic/cuckoo_inverse.png" />
+	</a>
+
+	<ul class="app-nav__nav--primary">
+		<li ><a href="/dashboard/"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+		<li ><a href="/analysis/"><i class="fa fa-th-list"></i> Recent</a></li>
+		<li ><a href="/analysis/pending/"><i class="fa fa-cogs"></i> Pending</a></li>
+		<li ><a href="/analysis/search/"><i class="fa fa-search"></i> Search</a></li>
+	</ul>
+
+	<ul class="app-nav__nav--right">
+		<li>
+			<a href="/submit/" class="button outline">Submit</a>
+		</li>
+		<li>
+			<a href="/analysis/import/" class="button outline">Import</a>
+		</li>
+		<li class="app-nav__dropdown--parent">
+			<a href="#" id="select-theme">
+				<i class="fa fa-paint-brush"></i>
+			</a>
+			<div class="app-nav__dropdown">
+				<h5>Select theme</h5>
+				<ul class="flex-distribute theme-selection">
+					<li><a class="active" href="theme:default">Default</a></li>
+					<li><a  href="theme:cyborg">Cyborg</a></li>
+					<li><a  href="theme:night">Night</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+
+</nav>
+
+<div class="app">
+	
+
+	<div class="app-message hidden" data-message="browser-recommendation">
+		<h5><i class="fa fa-warning"></i> Browser recommendation</h5>
+		<p>Hello, we noticed that you are using <span class="browser"></span>. For the best performance of this application, we recommend to use <a href="https://www.google.com/chrome/browser/desktop/index.html" title="Chrome" target="_blank">Chrome</a>, <a href="https://www.mozilla.org/nl/firefox/new/" title="Firefox" target="_blank">Firefox</a> or any browser that supports <a href="https://webkit.org/" title="WebKit" target="_blank">WebKit</a>.</p>
+		<div class="clearfix">
+			<a href="#dismiss" class="button pull-left">Dismiss</a>
+			<a href="#hide" class="button inversed pull-right">Don't show again</a>
+		</div>
+	</div>
+
+	
+
+    <div class="flex-nav">
+        <nav class="flex-nav__nav" id="analysis-nav">
+	
+	<ul class="cuckoo-nav">
+		
+		<li>
+			<a href="/analysis/17784/summary/"
+			 class="active" >
+				<i class="fa fa-home"></i>
+				<span>Summary</span>
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/static/"
+			>
+				<i class="fa fa-book"></i>
+				<span>Static Analysis</span>
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/extracted/"
+			>
+				<i class="fa fa-pencil"></i>
+				<span>Extracted Artifacts</span>
+                
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/behavior/"
+			>
+				<i class="fa fa-share-alt-square"></i>
+				<span>Behavioral Analysis</span>
+                
+				<em>1</em>
+                
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/network/"
+			>
+				<i class="fa fa-globe"></i>
+				<span>Network Analysis</span>
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/dropped_files/"
+			>
+				<i class="fa fa-file-code-o"></i>
+				<span>Dropped Files</span>
+				<em>0</em>
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/dropped_buffers/"
+			>
+				<i class="fa fa-server"></i>
+				<span>Dropped Buffers</span>
+                
+			</a>
+		</li>
+
+		
+
+		<li>
+			<a href="/analysis/17784/procmemory/"
+			>
+				<i class="fa fa-qrcode"></i>
+				<span>Process Memory</span>
+                
+			</a>
+		</li>
+
+        
+
+		<li>
+			<a href="/analysis/17784/compare/"
+			>
+				<i class="fa fa-random"></i>
+				<span>Compare Analysis</span>
+			</a>
+		</li>
+		<li>
+			<a href="/analysis/17784/export/"
+			>
+				<i class="fa fa-download"></i>
+				<span>Export Analysis</span>
+			</a>
+		</li>
+		<li>
+			<a href="#" data-toggle="modal" data-target="#modal_feedback">
+				<i class="fa fa-bug"></i>
+				<span>Feedback</span>
+			</a>
+		</li>
+
+		<li class="lock-sidebar">
+			<a href="sidebar:toggle-lock" title="Click to disable collapsing">
+				<i class="fa"></i>
+				<span></span>
+			</a>
+		</li>
+
+	</ul>
+
+</nav>
+
+        <section class="flex-nav__body cuckoo-analysis" tabindex="0">
+
+            <!-- common analysis page header -->
+            <header class="page-header cuckoo-analysis__header">
+                <h1>Summary </h1>
+                
+                <div class="header-right">
+                    <span class="file-name"><i class="fa fa-file-o"></i>
+                        0b7996bca486575be15e68dba7cbd802b1e5f90436ba23f802da66292c8a055f_a.elf
+                    </span>
+                </div>
+                
+            </header>
+            
+            <!-- snaps back to default bootstrap layout inside flex frame -->            
+            <div class="container-fluid">
+
+                <!-- this row breaks into 2 sides -->
+                <div class="row">
+                    <div class="col-md-8">
+
+                        
+                        
+                        
+                            
+<section id="file">
+    <h4><span class="glyphicon glyphicon-file" aria-hidden="true"></span> File
+        <i>0b7996bca486575be15e68dba7cbd802b1e5f90436ba23f802da66292c8a055f_a.elf</i>
+    </h4>
+
+    <div class="panel panel-default">
+        
+            <div class="panel-heading" style="height: 40px;">
+                <h4 class="panel-title">
+                    Summary
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-default btn-xs"
+                           href="/file/sample/594380f871add86d596db5cb/">
+                            <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download
+                        </a>
+                        <a class="btn btn-default btn-xs"
+                           href="/submit/re/17784/">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Resubmit sample
+                        </a>
+                    </div>
+
+                </h4>
+            </div>
+        
+
+        <table class="table table-striped">
+            <tr>
+                <th class="text-right">Size</th>
+                
+                    <td>475.7KB</td>
+                
+            </tr>
+            <tr>
+                <th class="text-right">Type</th>
+                <td>ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.9, not stripped</td>
+            </tr>
+            <tr>
+                <th class="text-right">MD5</th>
+                <td class="break-everywhere"><tt>27d857e12b9be5d43f935b8cc86eaabf</tt></td>
+            </tr>
+            <tr>
+                <th class="text-right">SHA1</th>
+                <td class="break-everywhere"><tt>ffebffc89a0b417e56dea3fdce962ee54f7ce00f</tt></td>
+            </tr>
+            <tr>
+                <th class="text-right">SHA256</th>
+                <td class="break-everywhere"><tt>0b7996bca486575be15e68dba7cbd802b1e5f90436ba23f802da66292c8a055f</tt></td>
+            </tr>
+            <tr>
+                <th class="text-right">SHA512</th>
+                <td class="break-everywhere">
+                    <button class="btn btn-primary btn-xs" type="button" data-toggle="collapse"
+                            data-target="#collapse-sha512" aria-expanded="false" aria-controls="collapseExample">
+                        Show SHA512
+                    </button>
+                    <div class="collapse" id="collapse-sha512"><tt>0898c58b8c69528c37d231a4ab5d83833d7b5235abdff5f94a238824f02fac794e57802cdeac5a39259723ff8cb860831a230300d39ddab390a0b2c93aa7e439</tt></div>
+                </td>
+            </tr>
+            <tr>
+                <th class="text-right">CRC32</th>
+                <td><tt>7783A945</tt></td>
+            </tr>
+            <tr>
+                <th class="text-right">ssdeep</th>
+                <td class="break-everywhere"><tt>None</tt></td>
+            </tr>
+            
+            <tr>
+                <th class="text-right">Yara</th>
+                <td>
+                    
+                        <ul style="margin-bottom: 0;">
+                            
+                                <li>embedded_macho - Contains an embedded Mach-O file</li>
+                            
+                        </ul>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+                        
+
+                    </div>
+                    <div class="col-md-4">
+                        <h4><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Score</h4>
+
+                        
+                            <div class="alert alert-success">
+                                This file appears fairly benign with a score of
+                                <strong>0.0 out of 10.</strong>
+                            </div>
+                        
+
+                        <p style="font-size: 11px;">
+                            <b>Please notice</b>: The scoring system is currently still in development and should be
+                            considered an <b><i>alpha</i></b> feature.
+                        </p>
+
+                        <hr>
+
+                        
+
+                        <h4><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Feedback</h4>
+
+                        <p style="font-size: 11px;">
+                            
+                                Expecting different results? Send us this analysis and we will inspect it. <a data-toggle="modal" data-target="#modal_feedback" href="#">Click here</a>
+                            
+                        </p>
+                    </div>
+                </div>
+
+                <!-- full page width items -->
+                <div class="row">
+                    <div class="col-md-12"><h4><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Information on Execution</h4>
+
+<div class="row">
+    <div class="col-md-7">
+        <section id="information">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Analysis
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Started</th>
+                            <th>Completed</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FILE</td>
+                            <td>March 18, 2019, 7:49 a.m.</td>
+                            <td>March 18, 2019, 7:52 a.m.</td>
+                            <td>176 seconds</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </div>
+    <div class="col-md-6">
+        
+            <section id="machine">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Machine</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Label</th>
+                                <th>Started On</th>
+                                <th>Shutdown On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>u64_3</td>
+                                <td>u64_3</td>
+                                <td>2019-03-18 07:49:31</td>
+                                <td>2019-03-18 07:52:26</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+            </section>
+        
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="info-log" class="collapse">
+            <h4><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Analyzer Log</h4>
+        </div>
+
+        <div id="info-cuckoo" class="collapse">
+            <h4><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Cuckoo Log</h4>
+        </div>
+    </div>
+</div>
+</div>
+                    <div class="col-md-12">
+
+<section id="summary-signatures">
+    <h4><i class="fa fa-qrcode"></i> Signatures</h4>
+
+    <div class="cuckoo-analysis__panels">
+
+        
+
+        
+            <p>No signatures</p>
+        
+
+    </div>
+
+</section></div>
+                    <div class="col-md-12"><section id="screenshots">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Screenshots
+            <div class="btn-group pull-right">
+                <button id="btn_screenshots_toggle" type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body minified">
+            
+                No screenshots available.
+            
+        </div>
+    </div>
+
+</section>
+</div>
+
+                    <div class="clearfix">
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+
+<div class="network-display__outer network-display__table" id="dns-requests">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Response</th>
+                <th>Post-Analysis Lookup</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            
+                <tr>
+                    <td class="cell-fill text-center" colspan="3">No hosts contacted.</td>
+                </tr>
+            
+
+        </tbody>
+    </table>
+
+</div></div>
+                        <div class="col-lg-3 col-md-4 col-sm-12"><div class="network-display__outer network-display__table" id="hosts">
+
+    <table>
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+
+                <tr>
+                    <td class="cell-fill text-center" colspan="3">No hosts contacted.</td>
+                </tr>
+
+            
+
+        </tbody>
+    </table>
+
+</div></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- footer replacement to avoid double scrollbars -->
+            <footer class="flex-grid__footer spread-alignment">
+                <p class="footnote">
+                    &copy;2010-2017 <a href="https://www.cuckoosandbox.org" target="_blank">Cuckoo Sandbox</a>
+                </p>
+                <div class="logo">
+                    <img src="/static/graphic/cuckoo_inverse.png" alt="Cuckoo Malware Analysis Sandbox" />
+                    <a href="#">Back to Top</a>
+                </div>
+            </footer>
+
+        </section>
+
+    </div>
+    
+
+	
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container-fluid center">
+            <a href="#">Back to the top</a>
+        </div>
+    </footer>
+    <div id="footer-extra">
+        <div class="container-fluid center">
+            <div>&copy;2010-2017 <a href="https://www.cuckoosandbox.org" target="_blank">Cuckoo Sandbox</a></div>
+        </div>
+    </div>
+
+    <!-- feedback form modal -->
+    
+
+<script src="/static/js/cuckoo/analysis_export.js"></script>
+<script src="/static/js/cuckoo/analysis_feedback.js"></script>
+
+<style>
+    .modal p{
+        font-size: 14px;
+    }
+</style>
+
+<!-- Feedback Modal -->
+<div id="modal_feedback" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel"><span style="color:white" class="glyphicon glyphicon-info-sign"></span> Feedback Form</h4>
+            </div>
+
+            <div class="modal-body" style="padding: 18px;">
+                <p>
+                    Expecting different results? Share this analysis report with us and we will investigate it.
+                    Please include a brief message of what you had expected to see and what you got instead.
+
+                    <br><br><small><b>The Cuckoo Sandbox team</b></small>
+                </p>
+
+                <hr>
+
+                <form method="post">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <input class="form-control" id="name" name="name" placeholder="Your name" type="text" value="" required autofocus />
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <input class="form-control" id="company" name="company" placeholder="Company" type="text" value="" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
+                            <input class="form-control" id="email" name="email" placeholder="E-mail" type="text" value="" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <textarea style="resize:vertical;" id="message" class="form-control" placeholder="Message..." rows="6" name="comment" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="cuckoo-box" style="padding: 16px; padding-top: 10px; padding-bottom: 0px;">
+                            <div class="cuckoo-box-primary">
+                                <input type="checkbox" id="analysis" name="analysis" value="analysis">
+                                <label for="analysis">Include analysis</label>
+                            </div>
+                            <div class="cuckoo-box-primary">
+                                <input type="checkbox" id="memory" name="memory" value="memory">
+                                <label for="memory">Include memory dump</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <br>
+                        <small id="export_estimate_size" style="margin-left: 10px;color: #adadad;"></small>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="panel-footer clearfix">
+                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                <input id="submit" disabled type="submit" class="btn btn-success" value="Send"/>
+                <span id="result"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- cuckoo freeze-page loader -->
+    <div class="page-freeze" id="page-freeze-container">
+        <div class="page-freeze__graphic">
+            <img src="/static/graphic/cuckoo-coffee-cup.png" alt="Cuckoo" />
+        </div>
+        <div class="page-freeze__animation">
+            <!-- spinner -->
+            <div class="page-freeze__spinner">
+                <div class="page-freeze__spinner--c1"></div>
+                <div class="page-freeze__spinner--c2"></div>
+            </div>
+        </div>
+        <div class="page-freeze__context">
+            <p class="page-freeze__message">We're processing your submission... This could take a few seconds.</p>
+            <div class="page-freeze__options hidden">
+                <button class="btn btn-default btn-lg close-page-freeze">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEEDBACK MODAL (_form.html) -->
+     <script>
+
+        // unless set elsewhere, define task_id as an empty variable of type String
+        if(!task_id)
+            var task_id = false;
+
+        var taken_files = [];
+        var taken_dirs = [];
+        var cb_analysis = true;
+
+        $(document).ready(function() {
+
+            var sel = $('#modal_feedback');
+
+            sel.on("shown.bs.modal", function() {
+                $("input:text:visible:first").focus()
+            });
+
+            function send_feedback_callback(data){
+                if(data['status'] == true){
+                    sel.find("span#result").html("Successfully sent feedback");
+
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1000);
+                } else {
+                    sel.find("span#result").html("error: " + data["message"]);
+                }
+                feedbackFormSubmitted = false;
+                send_button_toggle();
+            }
+
+            function send_feedback(){
+
+                send_button_toggle();
+
+                var email = sel.find("input#email").val();
+                var company = sel.find("input#company").val();
+                var message = sel.find("textarea#message").val();
+                var name = sel.find("input#name").val();
+
+                var include_analysis = sel.find("input#analysis").is(":checked");
+                var include_memory = false;
+
+                if(include_analysis){
+                    if(sel.find("input#memory").is(":checked")) include_memory = true;
+                }
+
+                feedback_send(task_id, name, email, company, message, include_analysis, include_memory, send_feedback_callback)
+            }
+
+            function initFeedbackForm(data){
+
+                if(!data) {
+                    var data = {
+                        files: [],
+                        dirs: []
+                    }
+                }
+
+                taken_files = data['files'];
+
+                function estimate_size(){
+                    var dirs = [];
+                    var files = [];
+
+                    if(sel.find("input#analysis").is(":checked")){
+                        dirs = taken_dirs;
+                        files = taken_files;
+                    }
+
+                    var memory = sel.find("input#memory").is(":checked");
+
+                    export_estimate_size(task_id, dirs, files, "#modal_feedback small#export_estimate_size", "Estimated size: ");
+                }
+
+                sel.find("input#analysis").change("click", function() {
+
+                    if(!this.checked){
+                        cb_analysis = false;
+
+                        var memory = sel.find("input#memory");
+                        if(memory.is(":checked")) $(memory).removeAttr("checked");
+                    } else {
+                        cb_analysis = true;
+                    }
+
+                    estimate_size();
+                });
+
+                sel.find("input#memory").on("click", function(e) {
+                    if(!cb_analysis) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        return;
+                    }
+
+                    if(this.checked) {
+                        taken_dirs.push("memory");
+                    } else {
+                        taken_dirs.pop();
+                    }
+
+                    estimate_size();
+                });
+
+                // Dont include the memory dump by default
+                data["dirs"].forEach(function(obj, i){
+                    if(obj[0] != "memory") taken_dirs.push(obj[0]);
+                });
+
+                sel.find("input#submit").prop("disabled", false);
+
+                sel.find("input#submit").click(function(){
+                    if(feedbackFormSubmitted) return false;
+                    feedbackFormSubmitted = true;
+                    send_feedback();
+                });
+
+                if(task_id) {
+                    sel.find('input#analysis').prop('checked','checked');
+                }
+
+                estimate_size();
+            }
+
+            if(task_id) {
+                export_get_files(task_id, initFeedbackForm);
+            } else {
+                initFeedbackForm();
+            }
+        });
+    </script>
+
+    <!-- HIGHLIGHT (_office.html, _pdf.html) -->
+    <script>
+        $(document).ready(function() {
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+    <!-- RECENT PAGE CODE (analysis/index.html) -->
+    <script>
+
+        $(document).ready(function() {
+
+            // only do this if we are on the recent page
+            if(!$('table#recent').length) return;
+
+            var recent;
+
+            $('body').on('click', 'div.nav_container>div', function() {
+
+                var btn_id = $(this).find("a").attr("data-filter");
+                var btn_active = $(this).attr('class');
+                var btn_categories = ["cat_files", "cat_urls"];
+
+                if($('a[data-filter^="score"]', this).length) {
+                    var score_choice = $(this).find('a').attr('data-filter');
+
+                    $('.nav_container>div#item>a[data-filter^="score"]').each(function(i, obj){
+                        obj = $(obj);
+                        var uid = obj.attr('data-filter');
+
+                        if(uid != score_choice){
+                            obj.parent().removeClass('active');
+                        }
+                    });
+                }
+
+                if(!btn_active){
+                    // when a category button is clicked, force deselection of adjacent categories
+                    if(btn_id.startsWith("cat_")){
+                        btn_categories.forEach(function (category) {
+                            if (category != btn_id) {
+                                category = $('.nav_container>div#item>a[data-filter="' + category + '"]').parent();
+
+                                if (category.hasClass("active")) { category.removeClass("active"); }
+                            }
+                        });
+                    }
+
+                    $(this).addClass('active');
+                    var filter = $(this).attr('data-filter');
+                    recent.load();
+                } else {
+                    $(this).removeClass('active');
+                    recent.load();
+                }
+            });
+
+            recent = new Recent();
+            recent.load();
+
+            // Detect end of page scroll
+            $(window).scroll(function() {
+               if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                    if(!recent.empty_results) recent.lazy_load();
+               }
+            });
+
+        });
+    </script>
+
+    <!-- IMPORT PAGE (import.html) -->
+    <script type='text/javascript'>
+
+        if(document.getElementById('analysis/import') !== null) {
+
+            $(document)
+                .on('change', '.btn-file :file', function() {
+                    var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+            });
+
+            $(document).ready( function() {
+                $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if( input.length ) {
+                        input.val(log);
+                    } else {
+                        if( log ) alert(log);
+                    }
+
+                });
+            });
+
+        }
+
+    </script>
+
+    <!-- WEBIF ANALYSIS  -->
+    <script>
+
+        $(document).ready(function(){
+
+            $("#btn_screenshots_toggle").click(function(){
+                $(this).parent().parent().parent().find('.panel-body').toggleClass("minified");
+            });
+
+            if($("table#network-hosts, table#network-dns").length) {
+
+                setTimeout(function () {
+                    ["network_hosts", "network_dns"].forEach(function (x) {
+                        $('#' + x).DataTable({
+                            responsive: true,
+                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                            "pageLength": 10,
+                            "language": {
+                                "lengthMenu": "Show _MENU_ results",
+                                "zeroRecords": "No results",
+                                "info": "_PAGE_/_PAGES_"
+                            }
+                        });
+                    });
+                }, 200);
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+

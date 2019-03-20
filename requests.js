@@ -46,7 +46,7 @@ const fetchPcap = id =>
       let hrefPcap = $("div div article header div a").attr("href");
       download(
         homePage + hrefPcap,
-        "./download/" + id.toString() + '/' + id.toString() + ".pcap",
+        "./download/" + id.toString() + "/" + id.toString() + ".pcap",
         err => {
           console.log(err);
         }
@@ -84,7 +84,7 @@ const fetchSummary = id =>
             return console.log(err);
             throw new Error(err);
           }
-        //   console.log("The file was saved!");
+          //   console.log("The file was saved!");
         }
       );
       return true;
@@ -142,9 +142,51 @@ const fetchBehavior = id =>
     )
       .then(ret => ret.text())
       .then(ret => {
+        const $ = cheerio.load(ret);
+        let arrayResult = [];
+        $("table tbody")
+          .children()
+          .each((i, elem) => {
+            let result = {};
+            $(elem)
+              .children()
+              .each(function(i, elem) {
+                if (i === 0)
+                  result["syscall"] = $(this)
+                    .find("p")
+                    .text();
+                if (i === 1) {
+                  // console.log("--");
+                  let str = $(this)
+                    .text()
+                    .replace(/\s/g, "");
+                  let listP = str.match(/p\d:/gm);
+                  let mListIndex = listP.map(val => {
+                    return str.indexOf(val);
+                  });
+                  mListIndex.push(str.length);
+                  let targetReg = {};
+                  for (let i = 0; i < mListIndex.length - 1; i++) {
+                    let register = str.substr(
+                      mListIndex[i],
+                      mListIndex[i + 1] - mListIndex[i]
+                    );
+                    let nameReg = register.substr(0, 2);
+                    let valueReg = register.substr(3, register.length - 3);
+                    targetReg[nameReg] = valueReg;
+                  }
+                  result['params'] = targetReg;
+                }
+              });
+              arrayResult.push(result);
+          });
+        // console.log(arrayResult);
         fs.writeFile(
-          "./download/" + id.toString() + '/' + "behavior_" + id.toString() + ".html",
-          ret,
+          "./download/" + id.toString() + '/' + "behavior_" + id.toString() + ".json",
+          JSON.stringify({
+            name: id,
+            data: arrayResult,
+          }),
           function(err) {
             if (err) {
               return console.log(err);
@@ -159,5 +201,5 @@ const fetchBehavior = id =>
 module.exports = {
   fetchSummary,
   fetchPcap,
-  fetchBehavior,
+  fetchBehavior
 };

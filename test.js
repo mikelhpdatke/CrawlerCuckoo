@@ -10,8 +10,8 @@ const fetchByPid = pid => {
   }
   Promise.all([
     requests.fetchBehavior(pid),
-    requests.fetchPcap(pid),
-    requests.fetchSummary(pid)
+    // requests.fetchPcap(pid),
+    // requests.fetchSummary(pid)
   ])
     .then(res => {
       console.log("fetch ..", pid, "done");

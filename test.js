@@ -10,15 +10,41 @@ const fetchByPid = pid => {
   }
   Promise.all([
     requests.fetchBehavior(pid),
-    // requests.fetchPcap(pid),
-    // requests.fetchSummary(pid)
+    requests.fetchPcap(pid),
+    requests.fetchSummary(pid)
   ])
-    .then(res => {
+    .then(values => {
       console.log("fetch ..", pid, "done");
+      fs.writeFile(
+        "./download/" +
+        pid.toString() +
+          "/" +
+          "reports_" +
+          pid.toString() +
+          ".json",
+        JSON.stringify({
+          name: pid,
+          summary: values[2],
+          syscalls: values[0],
+        }),
+        function(err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log("The file was saved!");
+        }
+      );
     })
     .catch(err => {
       console.log(err);
     });
 };
+/////////////////////////////////
+//// main
+try {
+  fetchByPid(process.argv[2]);
+} catch (error) {
+  console.log(error);
+}
 
-fetchByPid(17784);
+// console.log();

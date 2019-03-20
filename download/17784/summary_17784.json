@@ -1,0 +1,14 @@
+{
+  "name": "17784",
+  "data": {
+    "Size": "475.7KB",
+    "Type": "ELF64-bitLSBexecutable,x86-64,version1(SYSV),dynamicallylinked,interpreter/lib64/ld-linux-x86-64.so.2,forGNU/Linux2.6.9,notstripped",
+    "MD5": "27d857e12b9be5d43f935b8cc86eaabf",
+    "SHA1": "ffebffc89a0b417e56dea3fdce962ee54f7ce00f",
+    "SHA256": "0b7996bca486575be15e68dba7cbd802b1e5f90436ba23f802da66292c8a055f",
+    "SHA512": "ShowSHA5120898c58b8c69528c37d231a4ab5d83833d7b5235abdff5f94a238824f02fac794e57802cdeac5a39259723ff8cb860831a230300d39ddab390a0b2c93aa7e439",
+    "CRC32": "7783A945",
+    "ssdeep": "None",
+    "Yara": "embedded_macho-ContainsanembeddedMach-Ofile"
+  }
+}

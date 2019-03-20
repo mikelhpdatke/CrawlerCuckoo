@@ -1,0 +1,15 @@
+{
+  "name": "123",
+  "summary": {
+    "Size": "182.1KB",
+    "Type": "ELF32-bitLSBexecutable,MIPS,MIPS-Iversion1(SYSV),staticallylinked,notstripped",
+    "MD5": "05828c2dfb21df6610eb9728269b3ae1",
+    "SHA1": "c16875a6e4831334be8eccc8ea76c7b3de77632f",
+    "SHA256": "0da5a7502f279d98b1809944db83876c6d0bc6b834a71fbbe9ac20acfc377264",
+    "SHA512": "ShowSHA5127ae6efcb3eca82fbffdfb2fca95a93a6236a7efdef6e325febb78f4d88668a5f0ce5243a4d9955530afbb63a505d4e027afeb86d7c7dad4d3beacf6d1593b173",
+    "CRC32": "20406287",
+    "ssdeep": "None",
+    "Yara": "Nonematched"
+  },
+  "syscalls": { "name": "123", "data": [] }
+}

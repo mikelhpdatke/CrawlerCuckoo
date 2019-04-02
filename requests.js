@@ -78,6 +78,19 @@ const fetchSummary = id =>
     .then(ret => {
       const $ = cheerio.load(ret);
       var summaryData = {};
+      $(".btn").each(function(index, table) {
+        // console.log('??')
+        if (index === 0) {
+          // console.log($(table).attr("href"));
+          download(
+            homePage + $(table).attr("href"),
+            "./download/" + id.toString() + "/" + id.toString() + ".elf",
+            err => {
+              console.log(err);
+            }
+          );
+        }
+      });
       var str = $(".table-striped").each(function(index, table) {
         if (index === 0) {
           $(table)

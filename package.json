@@ -1,0 +1,24 @@
+{
+  "name": "crawlercuckoo",
+  "version": "1.0.0",
+  "description": "npm install node-fetch cheerio &&  node test.js your_pid",
+  "main": "requests.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikelhpdatke/CrawlerCuckoo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikelhpdatke/CrawlerCuckoo/issues"
+  },
+  "homepage": "https://github.com/mikelhpdatke/CrawlerCuckoo#readme"
+}
